@@ -1,5 +1,6 @@
 pantalla=document.getElementById('display')
 var acum=""
+var acum2=0
 var cadena=""
 pantalla.innerHTML="0"
 uno=document.getElementById('1')
@@ -16,6 +17,10 @@ on=document.getElementById('on')
 signo=document.getElementById('sign')
 punto=document.getElementById('punto')
 teclas=document.querySelectorAll('.tecla')
+suma=document.getElementById('mas')
+resta=document.getElementById('menos')
+multi=document.getElementById('por')
+divi=document.getElementById('dividido')
  function cambioTecla() {
    teclas[0].style="width:20%;height:59px;margin:0% 1%"}
  function vuelveTecla() {
@@ -170,7 +175,76 @@ cero.addEventListener('click', function(){
 punto.addEventListener('click', function(){
 cadena=compruebaPunto(cadena)
 })
+suma.addEventListener('click', function(){
+operacion=sumar()
+})
+resta.addEventListener('click', function(){
+operacion=restar()
+})
+multi.addEventListener('click', function(){
+operacion=multiplicar()
+})
+divi.addEventListener('click', function(){
+operacion=dividir()
+})
+igual.addEventListener('click', function(){
+
+ cadena=resultado(operacion)
+
+})
+var borrar=""
+function resultado(operacion){
+
+if (operacion=="+") {
+  var r=parseFloat(acum2) + parseFloat(acum)
+}else if (operacion=="-") {
+    var r=parseFloat(acum2) - parseFloat(acum)
+}else if (operacion=="*") {
+    var r=parseFloat(acum2) * parseFloat(acum)
+}else if (operacion=="/") {
+    var r=parseFloat(acum2)/parseFloat(acum)
+}
+r=r.toString()
+acum=r
+if (r.length<9) {
+  pantalla.innerHTML=r
+}else{
+  pantalla.innerHTML=r[0]+r[1]+r[2]+r[3]+r[4]+r[5]+r[6]+r[7]
+ }
+    borrar=1
+    return r
+}
+function sumar(){
+pantalla.innerHTML=""
+acum2=acum
+acum=""
+
+return "+"
+}
+function restar(){
+pantalla.innerHTML=""
+acum2=acum
+acum=""
+return "-"
+}
+function multiplicar(){
+pantalla.innerHTML=""
+acum2=acum
+acum=""
+return "*"
+}
+function dividir(){
+pantalla.innerHTML=""
+acum2=acum
+acum=""
+return "/"
+}
+
 function digitar (cadena,num){
+  if (borrar==1){
+    acum=""
+    borrar=0
+  }
   if ((cadena.length>=9&& cadena[0]== "-")
    ||(cadena.length>=8&& cadena[0]!= "-")){
     pantalla.innerHTML=acum
@@ -178,9 +252,9 @@ function digitar (cadena,num){
     pantalla.innerHTML=acum+num
     acum=acum+num
   }
+
   return acum
 }
-
 function comprueba0(cadena){
   if ((cadena.length<=8&& cadena[0]== "-")
    ||(cadena.length<=7&& cadena[0]!= "-")){
@@ -194,13 +268,12 @@ function comprueba0(cadena){
   }else {
     return acum
   }
-
-
 }
 function borra() {
   pantalla.innerHTML="0"
   cadena=""
   acum=""
+  acum2=0
 }
 function validaSigno(cadena){
   acum=cadena*-1
